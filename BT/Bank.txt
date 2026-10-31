@@ -14,10 +14,15 @@ contract Bank{
         balance+=msg.value;
     }
 
-    function Withdraw() public payable {
-        require(accOwner==msg.sender,"You are not an account owner");
-        require(msg.value > 0,"Account doesnot have sufficient balance!");
-        balance-=msg.value;
+    function Withdraw(uint256 amount) public {
+        require(accOwner == msg.sender, "You are not an account owner");
+        require(amount > 0, "Amount should be greater than 0");
+        require(amount <= balance, "Insufficient balance");
+
+        balance -= amount;
+
+        (bool success, ) = payable(accOwner).call{value: amount}("");
+        require(success, "Transfer failed");
     }
 
     function showBalance() public view returns(uint256){

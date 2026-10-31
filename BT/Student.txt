@@ -23,13 +23,11 @@ contract StudentData{
     }
 
     function getStudentByIndex(uint index) public view returns(Student memory){
-        require(index<studentArr.length || index > studentArr.length,"Index out of bound");
+        require(index< studentArr.length ,"Index out of bound");
         return studentArr[index];
     }
 
     function getLengthOfStudents() public view returns(uint){
         return studentArr.length;
     }
-
-
 }
